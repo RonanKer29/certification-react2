@@ -1,11 +1,63 @@
-const Welcome = ({ onStartQuiz }) => {
+import CategorySelect from "./CategorySelect";
+import DifficultySelect from "./DifficultySelect";
+
+const Welcome = ({
+  onStart,
+  isLoading,
+  selectedCategory,
+  setSelectedCategory,
+  selectedDifficulty,
+  setSelectedDifficulty,
+  quizStarted,
+}) => {
+  const handleStart = () => {
+    if (!isLoading) {
+      onStart(selectedCategory, selectedDifficulty);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 flex items-center justify-center px-4">
-      <div className="bg-white shadow-2xl rounded-2xl border border-gray-300 max-w-xl w-full p-8 space-y-6">
-        <h1 className="text-4xl font-extrabold text-indigo-600 text-center">
-          Welcome to the Quiz
-        </h1>
+    <div className="p-6 max-w-2xl mx-auto">
+      <h1 className="text-3xl font-bold mb-4 text-center">
+        Welcome to the Quiz
+      </h1>
+      <div className="flex mt-4 gap-4 w-full items-center">
+        <CategorySelect
+          selectedCategory={selectedCategory}
+          onChange={setSelectedCategory}
+          quizStarted={quizStarted}
+        />
+        <DifficultySelect
+          selectedDifficulty={selectedDifficulty}
+          onChange={setSelectedDifficulty}
+          quizStarted={quizStarted}
+        />
+        <div className="w-1/3 mb-4">
+          <button
+            id="createBtn"
+            onClick={handleStart}
+            disabled={isLoading || quizStarted}
+            className={`w-full h-full font-semibold py-2 px-4 rounded transition-colors duration-200 ${
+              quizStarted
+                ? "bg-gray-200 text-white cursor-not-allowed"
+                : isLoading
+                ? "bg-indigo-400 text-white opacity-50 cursor-not-allowed"
+                : "bg-indigo-600 text-white hover:bg-indigo-700 active:bg-indigo-800"
+            }`}
+          >
+            {isLoading
+              ? "Loading..."
+              : quizStarted
+              ? "Quiz in progress"
+              : "Start Quiz"}
+          </button>
+        </div>
       </div>
+      {quizStarted && (
+        <p className="mt-2 text-sm text-amber-600 text-center font-medium">
+          Quiz started — answer all questions below.
+        </p>
+      )}
     </div>
   );
 };
