@@ -62,8 +62,7 @@ const App = () => {
 
   return (
     <>
-      {/* Welcome toujours affiché sur toutes les pages */}
-      <div className="p-6 max-w-2xl mx-auto">
+      <div className="">
         <Welcome
           onStart={startQuiz}
           isLoading={isLoading}
@@ -75,13 +74,12 @@ const App = () => {
         />
       </div>
 
-      {/* Routes pour Quiz et Results */}
       <Routes>
         <Route
           path="/"
           element={
             quizStarted && questions.length > 0 ? (
-              <div className="p-6 max-w-7xl mx-auto">
+              <div className="p-6 max-w-4xl mx-auto ">
                 <Quiz
                   score={score}
                   questionsData={questions}
@@ -95,7 +93,7 @@ const App = () => {
         <Route
           path="/results"
           element={
-            <div className="p-6 max-w-7xl mx-auto">
+            <div className="p-6 max-w-4xl mx-auto">
               <Results
                 score={score}
                 questionsData={questions}

@@ -10,7 +10,9 @@ const DifficultySelect = ({ selectedDifficulty, onChange, quizStarted }) => {
         }`}
         disabled={quizStarted}
       >
-        <option value="">Any difficulty</option>
+        <option value="" disabled>
+          Select a difficulty
+        </option>
         <option value="easy">Easy</option>
         <option value="medium">Medium</option>
         <option value="hard">Hard</option>

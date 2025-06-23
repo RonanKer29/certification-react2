@@ -17,25 +17,27 @@ const Quiz = ({ questionsData, onSubmit }) => {
   return (
     <div>
       {questionsData.map((question, index) => (
-        <div key={index} className="mb-6">
-          <h3 className="mb-2 font-semibold">
+        <div key={index} className="mb-8">
+          <h3 className="mb-4 font-semibold text-lg">
             {decodeHTML(question.question)}
           </h3>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-3">
             {question.allAnswers.map((answer, i) => {
               const isSelected = answers[index] === answer;
-              let buttonStyle =
-                "border p-2 min-w-[120px] bg-gray-100 min-h-[40px] rounded transition-colors duration-150 cursor-pointer";
-
-              buttonStyle += isSelected
-                ? " bg-indigo-600 text-white font-semibold"
-                : " bg-gray-100 hover:bg-indigo-600 hover:text-white";
-
               return (
                 <button
                   key={i}
                   onClick={() => handleAnswerClick(index, answer)}
-                  className={buttonStyle}
+                  className={`
+                    px-4 py-3 min-w-[140px] rounded-lg border-2 font-medium
+                    transition-all duration-200 ease-in-out transform
+                    hover:scale-105 hover:shadow-md active:scale-95 cursor-pointer
+                    ${
+                      isSelected
+                        ? "bg-indigo-600 border-indigo-600 text-white shadow-lg"
+                        : "bg-white border-gray-200 text-gray-700 hover:border-indigo-400 hover:bg-indigo-50"
+                    }
+                  `}
                 >
                   {decodeHTML(answer)}
                 </button>
@@ -48,7 +50,11 @@ const Quiz = ({ questionsData, onSubmit }) => {
       {allAnswered && (
         <button
           onClick={() => onSubmit(answers)}
-          className="mt-10 bg-green-600 text-white px-4 py-2 rounded  font-semibold cursor-pointer hover:bg-green-700 transition-colors"
+          className="mx-auto flex cursor-pointer mt-12 bg-gradient-to-r from-green-600 to-green-700 text-white
+                     px-8 py-4 rounded-lg font-semibold text-lg
+                     hover:from-green-700 hover:to-green-800
+                     transform hover:scale-105 transition-all duration-200
+                     shadow-lg hover:shadow-xl active:scale-95"
         >
           Submit Answers
         </button>

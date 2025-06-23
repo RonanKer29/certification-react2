@@ -31,7 +31,9 @@ const CategorySelect = ({ selectedCategory, onChange, quizStarted }) => {
           quizStarted ? "cursor-not-allowed" : ""
         }`}
       >
-        <option value="">Any category</option>
+        <option value="" disabled>
+          Select a Category
+        </option>
         {categories.map((cat) => (
           <option key={cat.id} value={cat.id}>
             {cat.name}

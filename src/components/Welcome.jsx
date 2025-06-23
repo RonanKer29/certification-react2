@@ -42,7 +42,7 @@ const Welcome = ({
                 ? "bg-gray-200 text-white cursor-not-allowed"
                 : isLoading
                 ? "bg-indigo-400 text-white opacity-50 cursor-not-allowed"
-                : "bg-indigo-600 text-white hover:bg-indigo-700 active:bg-indigo-800"
+                : "bg-indigo-600 text-white hover:bg-indigo-700 active:bg-indigo-800 cursor-pointer"
             }`}
           >
             {isLoading
@@ -55,7 +55,8 @@ const Welcome = ({
       </div>
       {quizStarted && (
         <p className="mt-2 text-sm text-amber-600 text-center font-medium">
-          Quiz started — answer all questions below.
+          Quiz started — answer all questions below and click on the submit
+          button to verify your answers
         </p>
       )}
     </div>
