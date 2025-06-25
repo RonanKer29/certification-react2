@@ -51,7 +51,7 @@ const Results = ({ score, questionsData, userAnswers, onRestart }) => {
           }
         `}
         >
-          Your score: {score} / {questionsData.length}
+          Your scored {score} out of {questionsData.length}
         </p>
       </div>
 
