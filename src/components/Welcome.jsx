@@ -9,9 +9,10 @@ const Welcome = ({
   selectedDifficulty,
   setSelectedDifficulty,
   quizStarted,
+  canStartQuiz,
 }) => {
-  const handleStart = () => {
-    if (!isLoading) {
+  const handleStartClick = () => {
+    if (!isLoading && canStartQuiz) {
       onStart(selectedCategory, selectedDifficulty);
     }
   };
@@ -35,13 +36,15 @@ const Welcome = ({
         <div className="w-1/3 mb-4">
           <button
             id="createBtn"
-            onClick={handleStart}
-            disabled={isLoading || quizStarted}
+            onClick={handleStartClick}
+            disabled={isLoading || quizStarted || !canStartQuiz}
             className={`w-full h-full font-semibold py-2 px-4 rounded transition-colors duration-200 ${
               quizStarted
                 ? "bg-gray-200 text-white cursor-not-allowed"
                 : isLoading
                 ? "bg-indigo-400 text-white opacity-50 cursor-not-allowed"
+                : !canStartQuiz
+                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                 : "bg-indigo-600 text-white hover:bg-indigo-700 active:bg-indigo-800 cursor-pointer"
             }`}
           >
@@ -53,6 +56,13 @@ const Welcome = ({
           </button>
         </div>
       </div>
+
+      {!canStartQuiz && !isLoading && !quizStarted && (
+        <p className="mt-2 text-sm text-red-500 text-center font-medium">
+          Please select both a category and difficulty to start the quiz
+        </p>
+      )}
+
       {quizStarted && (
         <p className="mt-2 text-sm text-amber-600 text-center font-medium">
           Quiz started — answer all questions below and click on the submit

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import Welcome from "./components/Welcome";
 import Quiz from "./components/Quiz";
 import Results from "./components/Results";
@@ -15,6 +15,13 @@ const App = () => {
   const navigate = useNavigate();
 
   const startQuiz = async (categoryId, difficulty) => {
+    if (!categoryId || !difficulty) {
+      alert(
+        "Please select both a category and a difficulty before starting the quiz."
+      );
+      return;
+    }
+
     try {
       setIsLoading(true);
       setQuizStarted(true);
@@ -49,7 +56,7 @@ const App = () => {
     });
     setScore(total);
     setUserAnswers(answers);
-    navigate("/results"); // Navigation vers la page Results
+    navigate("/results");
   };
 
   const handleRestart = () => {
@@ -59,6 +66,25 @@ const App = () => {
     setScore(0);
     navigate("/");
   };
+
+  const ProtectedResults = () => {
+    if (userAnswers.length === 0 || questions.length === 0) {
+      return <Navigate to="/" replace />;
+    }
+
+    return (
+      <div className="p-6 max-w-4xl mx-auto">
+        <Results
+          score={score}
+          questionsData={questions}
+          userAnswers={userAnswers}
+          onRestart={handleRestart}
+        />
+      </div>
+    );
+  };
+
+  const canStartQuiz = selectedCategory !== "" && selectedDifficulty !== "";
 
   return (
     <>
@@ -71,9 +97,9 @@ const App = () => {
           selectedDifficulty={selectedDifficulty}
           setSelectedDifficulty={setSelectedDifficulty}
           quizStarted={quizStarted}
+          canStartQuiz={canStartQuiz}
         />
       </div>
-
       <Routes>
         <Route
           path="/"
@@ -90,19 +116,7 @@ const App = () => {
             ) : null
           }
         />
-        <Route
-          path="/results"
-          element={
-            <div className="p-6 max-w-4xl mx-auto">
-              <Results
-                score={score}
-                questionsData={questions}
-                userAnswers={userAnswers}
-                onRestart={handleRestart}
-              />
-            </div>
-          }
-        />
+        <Route path="/results" element={<ProtectedResults />} />
       </Routes>
     </>
   );
