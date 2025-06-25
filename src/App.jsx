@@ -64,6 +64,8 @@ const App = () => {
     setQuestions([]);
     setUserAnswers([]);
     setScore(0);
+    setSelectedCategory("");
+    setSelectedDifficulty("");
     navigate("/");
   };
 
